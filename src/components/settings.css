@@ -1,0 +1,35 @@
+
+.SettingsMain{
+    margin-top: 20vh;
+    background: var(--main-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    /* background-color: bisque; */
+    /* margin-left: -2px;
+    margin-right:-20px; */
+    padding-left: 0;
+    padding-right:0;
+}
+
+
+
+.holder{
+  background: #fff;
+  border-radius:5px; 	
+  box-shadow: 0 2px 3px 0 rgba(0,0,0,.1);	
+  margin:100px auto;
+  padding:30px 20px 20px;
+  width:400px;
+}
+
+td{
+  border-bottom:1px solid #f6f6f6;
+  padding:5px 10px;
+  color:black;
+}
+
+td a{
+    color:black;
+}

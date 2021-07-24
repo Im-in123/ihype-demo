@@ -1,0 +1,462 @@
+.DetailContainer{
+    position: relative;
+    min-height: calc(100vh-250px);
+    overflow-x: hidden;
+    display: block;
+    top: 72px;
+    padding: 0 calc(3.5vw + 5px);
+}
+.DetailBackground{
+    left: 0px;
+    opacity: 0.8;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    z-index: -1;
+    /* filter: blur(4px); */
+    
+}
+
+.DetailBackground1{
+     filter: blur(4px); 
+    
+}
+
+.DetailBackground img{
+    margin-top:11vh;
+    height: 89vh;
+    width: 100vw;
+   
+
+}
+
+@media only screen and (max-width: 768px) {
+    .DetailBackground {
+        width: initial;
+        
+       
+    }
+     .DetailBackground img{
+         /* margin-top:11vh; */
+         margin-top: 50px;
+         height:99vh;
+         width:100vw;
+       
+    } 
+
+}
+
+.DetailImageTitle{
+    align-items: flex-end;
+    display: flex;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    margin: 0px auto;
+    height: 20vw;
+    min-height: 170px;
+    padding-bottom: 24px;
+    width: 100%;  
+    margin-top: 40px;
+    font-weight: 800;
+
+}
+
+.DetailImageTitle  img{
+    max-width: 600px;
+    min-width: 200px;
+    width: 35vw;
+    border-radius: 4px;
+   
+}
+
+.DetailImageTitle p{
+    max-width: 600px;
+    min-width: 200px;
+    width: 35vw;
+    border-radius: 4px;
+    transform: rotate(-8deg);
+    font-size: 65px;
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+    font-weight: 600;
+
+    font-family: 'Times New Roman', Times, serif;
+    /* font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    font-style: italic;
+    text-transform: capitalize;
+}
+
+@media only screen and (max-width: 768px) {
+    .DetailImageTitle{
+        align-items: flex-end;
+        display: flex;
+        -webkit-box-pack: start;
+        justify-content: flex-start;
+        margin: 0px auto;
+        height: 20vw;
+        min-height: 170px;
+        padding-bottom: 24px;
+        width: 100%;  
+        /* background-color: blanchedalmond; */
+        margin-top: 40px;
+        font-weight: 500;
+        font-family: 'Times New Roman', Times, serif !important;
+
+
+    }
+    .DetailImageTitle p{
+        max-width: 600px;
+        min-width: 200px;
+        width: 35vw;
+        border-radius: 4px;
+        transform: rotate(-8deg);
+        font-size: 30px;
+        /* font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+
+        font-family: 'Times New Roman', Times, serif !important;
+        font-style: italic;
+        text-transform: capitalize;
+    }
+
+}
+.DetailContentMeta{
+    max-width: 874px;
+}
+
+.DetailControls{
+    align-items: center;
+    display: flex;
+    flex-flow: row nowrap;
+    margin: 24px 0px;
+    min-height: 56px;   
+}
+
+.DetailPlayer{
+    font-size: 15px;
+    margin: 0px 22px 0px 0px;
+    padding: 0px 24px;
+    height: 56px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1.8px;
+    text-align: center;
+    text-transform: uppercase;
+    background: whitesmoke;
+    border: none;
+    color: rgb(0, 0, 0);  
+    /* font-family: 'Times New Roman', Times, serif; */
+        /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+
+
+}
+
+.DetailPlayer img{
+
+    width: 32px;
+}
+/* .DetailPlayer button{
+    font-size: 15px;
+    border: none;
+
+}
+.DetailPlayer button:focus{
+    border:none;
+}
+.DetailPlayer button:hover{
+    background-color: rgb(198, 198, 198); 
+
+} */
+
+.DetailPlayer:hover{
+    background-color: rgb(198, 198, 198); 
+}
+
+@media only screen and (max-width: 768px) {
+    .DetailPlayer{
+        height: 45px;
+        padding: 0px 12px;
+        font-size: 12px;
+        margin: 0px 10px 0px 0px;
+        /* font-family: 'Times New Roman', Times, serif; */
+
+        /* margin-right:27px; */
+    
+    }
+    .DetailPlayer img{
+        width: 25px;
+
+    }
+}
+
+.DetailTrailer{
+   background: rgba(0, 0, 0, 0.3);
+   border: 1px solid rgb(249, 249, 249);
+   color: rgb(249, 249, 249);
+   font-size: 15px;
+   margin: 0px 22px 0px 0px;
+   padding: 0px 24px;
+   height: 56px;
+   border-radius: 4px;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   letter-spacing: 1.8px;
+   text-align: center;
+   text-transform: uppercase;
+   background: rgb (249, 249, 249);
+   /* font-family: 'Times New Roman', Times, serif; */
+
+   /* margin-right:27px; */
+}
+.DetailTrailer:hover{
+    background: rgb(198, 198, 198);
+}
+
+.DetailTrailer img{
+    width: 32px;
+    
+    
+}
+
+.DetailTrailer span{
+   
+    color:whitesmoke;
+      
+}
+
+@media only screen and (max-width: 768px) {
+    .DetailTrailer{
+        height: 45px;
+        padding: 0px 12px;
+        font-size: 12px;
+        margin: 0px 10px 0px 0px;
+
+    }
+    .DetailPlayer img{
+        width: 25px;
+    }
+}
+
+
+.DetailAddList{
+    
+    margin-right: 16px;
+    height: 44px;
+    width: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    outline: 0 !important;
+    box-shadow: none !important;
+  
+   
+}
+.DetailAddList:focus{
+    outline: 0 !important;
+    box-shadow: none !important;
+
+}
+
+.DetailAddList p{
+    /* max-width: 600px; */
+    /* min-width: 200px; */
+    /* width: 25px; */
+    /* background-color: black; */
+    color:white;
+    /* border-radius: 4px; */
+}
+/* .DetailAddList img{
+    background-color: black;
+    width:61px;
+    height:36px;
+    border-radius: 130px;
+} */
+
+
+
+
+.DetailAddList span{
+    background-color: rgb(249, 249, 249);
+    display: inline-block;
+ 
+}
+
+.DetailAddList span:first-child{
+    height: 2px;
+    transform: translate(1px, 0px) rotate(0deg);
+    width: 16px;  
+}
+
+.DetailAddList span:nth-child(2){
+    height: 16px;
+    transform: translateX(-8px) rotate(0deg);
+    width: 2px;  
+}
+
+
+
+.DetailGroupWatch{
+    height: 44px;
+    width: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: white;
+  
+}
+
+.DetailGroupWatch div{
+    height: 40px;
+    width: 40px;
+    background: rgb(0, 0, 0);
+    border-radius: 50%;
+ 
+}
+
+.DetailGroupWatch div img{
+    width: 100%;
+  }
+
+.DetailSubtitle{
+    color: rgb(249, 249, 249);
+    font-size: 15px;
+    min-height: 20px;
+    padding: 5px 3px;
+    font-family: 'Times New Roman', Times, serif;
+
+  }
+
+@media only screen and (max-width: 768px) {
+    .DetailSubtitle{
+        font-size: 12px;
+        /* background-color:rgba(22, 20, 20, 0.5); */
+        padding: 5px 5px;
+        
+      
+    }
+}
+
+.DetailDescription{
+    line-height: 1.4;
+    font-size: 20px;
+    padding: 16px 5px;
+    color: white;
+    border-radius: 7px;
+
+    background-color:rgba(22, 20, 20, 0.5);
+ 
+
+    
+}
+
+.DetailSeason{
+    margin-top:5px;
+    line-height: 1.4;
+    font-size: 20px;
+    padding: 16px 5px;
+    color: white;
+    border-radius: 7px;
+    /* border:2px solid rgb(241, 236, 236); */
+    background-color:rgba(22, 20, 20, 0.5);
+    font-family: 'Times New Roman', Times, serif;
+
+    
+    
+}
+
+.DetailSeason .episode{
+    background-color:rgba(252, 249, 249, 0.7);
+    border:none;
+    border-radius: 3px;
+    color:black;
+    /* font-size: 14px; */
+    letter-spacing: 0.3px;
+}
+
+.DetailSeason .episode:hover{
+    color:red;
+    border:none;
+    border-radius: 3px;
+    cursor:pointer;
+}
+
+.DetailVideo video{
+    width: 100% !important;
+    height: 65vh  !important;
+   
+}
+.DetailVideo button{
+    margin-bottom: 20px;
+}
+
+.DetailVideo  button:hover{
+    color:red;
+}
+.DetailVideo  p{
+    text-align: left;
+    margin-left: 7px;
+}
+
+@media only screen and (max-width: 768px) {
+    .DetailDescription{
+        font-size: 16px;
+            /* font-family: 'Times New Roman', Times, serif; */
+
+    }
+
+    .DetailVideo{
+        margin-left:-14px !important;
+        /* padding-left: -10px !important; */
+       
+    }
+
+    .DetailVideo  button{
+       font-family:'Times New Roman', Times, serif;
+       font-size: 9px;
+       margin-bottom: 1px;
+       border-radius: 3px;
+       border: none;
+       margin-left: 7px;
+    
+
+    }
+    .DetailVideo  button:hover{
+        color:red;
+    }
+    .DetailVideo  p{
+     
+        text-align: left;
+        margin-left: 7px;
+    }
+
+    .DetailVideo video{
+        /* width: 90vw   !important;
+        height: 40vh  !important; */
+        width: 98vw   !important;
+        height: 40vh  !important;
+       
+        /* background-color:rgba(22, 20, 20, 0.5); */
+        border-radius:7px;
+       
+    }
+    
+}
+
+
+.rjs{
+    width:90vw !important;
+    height:90vw !important;
+    border-radius:8px;
+            background-color:rgba(22, 20, 20, 0.5) !important;
+
+
+}
