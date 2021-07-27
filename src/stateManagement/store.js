@@ -5,7 +5,15 @@ import {
   secondChangeState,
   secondChangeReducer,
   userDetailState,
-  userDetailReducer
+  userDetailReducer,
+  currentPageMovieState,
+  currentPageMovieReducer,
+  currentPageSeriesState,
+  currentPageSeriesReducer,
+  currentPageHomeState,
+  currentPageHomeReducer,
+  currentPageWatchlistState,
+  currentPageWatchlistReducer
 
 } from "./reducers";
 
@@ -19,13 +27,21 @@ const reduceReducers = (...reducers) => (prevState, value, ...args) => {
 const combinedReducers = reduceReducers(
  currentVideoReducer,
  secondChangeReducer,
- userDetailReducer
+ userDetailReducer,
+ currentPageMovieReducer,
+ currentPageSeriesReducer,
+ currentPageHomeReducer,
+ currentPageWatchlistReducer
 );
 
 const initialState = {
   ...currentVideoState,
   ...secondChangeState,
-  ...userDetailState
+  ...userDetailState,
+  ...currentPageMovieState,
+  ...currentPageSeriesState,
+  ...currentPageHomeState,
+  ...currentPageWatchlistState
 };
 
 const store = createContext(initialState);

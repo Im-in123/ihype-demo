@@ -1,21 +1,20 @@
-import React, { useState, useContext, useEffect, useRef , useLayoutEffect} from "react";
+import React, { useState, useContext, useEffect,  useLayoutEffect} from "react";
 import { Link } from "react-router-dom";
 import "./detail.css";
 import { store } from "../stateManagement/store";
 import { ADD_TO_LIST_URL, CHECK_WATCHLIST_URL, SERIES_URL } from '../urls';
-import axios from "axios";
 import { ReactVideo } from "reactjs-media";
 import ReactPlayer from 'react-player'
 import {currentSeriesVideoAction} from "../stateManagement/actions";
 import {secondChangeAction} from "../stateManagement/actions";
 import { axiosHandler, getToken } from "../helper";
-import {  tokenName } from "../customs/authController";
 
 
 
 const SeriesDetail = (props) => {
   const {state:{userDetail}} = useContext(store)
-  
+  const [reload, setReload] = useState(true)
+
 
   console.log("props::::", props)
   const [fetching, setFetching] = useState("true");
@@ -55,63 +54,11 @@ const SeriesDetail = (props) => {
 
 
   useEffect(() => {
-
-    // prompt("Please use UC browser if you encounter videoplack errors. Thank you.")
     console.log(props)
-    console.log("url:::::", SERIES_URL+props.match.params.slug)
-    // const result = await axiosHandler({
-    //   method:"get",
-    //   url:SERIES_URL+props.match.params.slug,
-    // }).catch((e) => {
-
-    // });
-    const vb = async ()=>{
-      const token = await getToken();
-      const result = await axiosHandler({
-        method:"get",
-        url:SERIES_URL+props.match.params.slug,
-        token
-      }).catch((e) => {
-          console.log(e)
-          setError(true)
-      });
-      if(result){
-        setDetailData(result.data)
-            
-        console.log(result.data)
-        const yo = result.data.season 
-        for(var g in yo ){
-         //  console.log("Yooooooooo:::::::", yo[g])
-         if (yo[g].season_num ===1){
-           // console.log("got it::::", yo[g].season_num)
-           const yo1= yo[g].episodes
-           for (var v in yo1){
-             if (yo1[v].episode_num===1){
-               // console.log("Got the first episode::::", yo1[v].episode_num)
-               const yo2= yo1[v]
-               // console.log("Got final episode:::",yo2)
-               dispatch({type:currentSeriesVideoAction,payload:{"video":yo2.video,"cover":yo2.cover, "title":yo2.title, "season_num":yo2.season_num}});
-               console.log("starter episode:::::", currentVideo)
-  
-             }
-           }
-         }
-        
-        }
-        setFetching(false)
-        checkAddtoList(result.data)
-  
-      }
-      
-    
-     resize();
-     
-  
-
-    }
-    vb();
-  
-}, []);
+    console.log("url:::::", SERIES_URL+props.match.params.slug)   
+    vb(props)
+   
+}, [reload]);
 
 useEffect(() => {
   if(secondChange===false){
@@ -124,6 +71,56 @@ useEffect(() => {
 useEffect(() => {
  
 }, []);
+ // prompt("Please use UC browser if you encounter videoplack errors. Thank you.")
+
+ const vb = async (props)=>{
+   setFetching(true)
+
+   const token = await getToken();
+   const result = await axiosHandler({
+     method:"get",
+     url:SERIES_URL+props.match.params.slug,
+     token
+   }).catch((e) => {
+       console.log(e)
+       setError(true)
+   });
+   if(result){
+     setDetailData(result.data)
+         
+     console.log(result.data)
+     const yo = result.data.season 
+     for(var g in yo ){
+      //  console.log("Yooooooooo:::::::", yo[g])
+      if (yo[g].season_num ===1){
+        // console.log("got it::::", yo[g].season_num)
+        const yo1= yo[g].episodes
+        for (var v in yo1){
+          if (yo1[v].episode_num===1){
+            // console.log("Got the first episode::::", yo1[v].episode_num)
+            const yo2= yo1[v]
+            // console.log("Got final episode:::",yo2)
+            dispatch({type:currentSeriesVideoAction,payload:{"video":yo2.video,"cover":yo2.cover, "title":yo2.title, "season_num":yo2.season_num, "subtitle_file":yo2.subtitle_file}});
+            console.log("starter episode:::::", currentVideo)
+
+          }
+        }
+      }
+     
+     }
+     checkAddtoList(result.data)
+     setFetching(false)
+
+   }
+   
+ 
+  resize();
+  
+
+
+ }
+ 
+
 
 const handleToggleButtonClick = (e) => {  
   // if (isShown) return
@@ -188,7 +185,7 @@ const checkAddtoList =async (e)=>{
       console.log("checkWatchlist result::::",checkadd.data)
       const rr = checkadd.data['data']
       console.log("cccc::::",rr)
-      if(rr =="exist-true"){
+      if(rr ==="exist-true"){
         setFinalwatch(true)
         setWatchFetch(false)
       }else{
@@ -236,18 +233,15 @@ const handleAddtoList =async (e)=>{
 
 
 if (fetching){
-  return(<>
+  return (<div className="DetailContainer">
      {error ? (
-          <div className="DetailContainer">
-            <h4 className="H4Group">Connection failed, try again!!!</h4>
-      </div>
+           <h4 className="H4Group"  >Connection failed!  &nbsp;&nbsp; <button onClick={() => setReload(!reload)} >  Retry</button></h4>
          ) : (
-          <div className="DetailContainer">
-          <h4 className="H4Group">Loading ...</h4>
-      </div>
+         <h4 id="loaderdetail"></h4>
+
              )}
-      
-      </>
+
+      </div>
   )
 }
 
@@ -339,24 +333,31 @@ if (fetching){
          <p>Trailer Not available</p> 
    </>  )}
   </>  ) :(<>
-     <p>Season {currentVideo.season_num} - {currentVideo.title}</p>
-     <button onClick={handleCloseButtonClick}>
-  X Close Video 
-  </button> 
-          <video  autoPlay={true} controls="controls" poster={detailData.cover && currentVideo.cover}>
-            <source src={currentVideo.video} type="video/mkv"/>
-            <source src={currentVideo.video} type="video/webm"/>
-            <source src={currentVideo.video} type="video/ogg"/>
-            <source src={currentVideo.video}  type="video/mp4"/>
+        {currentVideo.video ? (<>
+   <p>Season {currentVideo.season_num} - {currentVideo.title}</p>
+   <button onClick={handleCloseButtonClick}>
+X Close Video 
+</button> 
+        <video crossorigin="anonymous" autoPlay={true} controls="controls" poster={detailData.cover && currentVideo.cover}>
+        <track src={currentVideo.subtitle_file} label="English" srcLang="en-us" kind="subtitles"  default />
+          <source src={currentVideo.video} type="video/mkv"/>
+          <source src={currentVideo.video} type="video/webm"/>
+          <source src={currentVideo.video} type="video/ogg"/>
+          <source src={currentVideo.video}  type="video/mp4"/>
 
-          </video>
+        </video>
+       </> ):(<>
+        <p>Season {currentVideo.season_num} - {currentVideo.title}</p>
+        <button onClick={handleCloseButtonClick}>
+      X Close 
+      </button> 
+         <p>Video Not available</p> 
+          </>
+        )}
       
        </> )}
           </div>
-          {/* <div className="DetailVideo">
-            <p>react-player Package</p>
-          <ReactPlayer url={detailData.video} playing={false} controls={true} light={true} playbackRate="1"  poster={detailData.cover}/>
-          </div> */}
+         
           {/* <div>
             <p>reactjs-media Package</p>
          <ReactVideo
@@ -395,8 +396,8 @@ const Season =(props)=>{
 
 
 
-  const Changeit=(video, cover, scrollid, season_num)=>{
-    dispatch({type:currentSeriesVideoAction,payload:{"video":video,"cover":cover, "title":scrollid, "scrollid":scrollid, "season_num":season_num}});
+  const Changeit=(video, cover, scrollid, season_num, subtitle_file)=>{
+    dispatch({type:currentSeriesVideoAction,payload:{"video":video,"cover":cover, "title":scrollid, "scrollid":scrollid, "season_num":season_num, "subtitle_file":subtitle_file}});
     dispatch({type:secondChangeAction,payload:true})
 
   }
@@ -417,7 +418,7 @@ const Season =(props)=>{
        <p style={{textAlign:"left"}}>{item.title}</p>
        {item.episodes.map((ep,ekey)=>
         <div  id="getit" key={ekey}>
-          <button id={ep.title} className="episode" onClick={()=> Changeit(ep.video,ep.cover, ep.title, ep.season_num)} > {ep.title}</button>
+          <button id={ep.title} className="episode" onClick={()=> Changeit(ep.video,ep.cover, ep.title, ep.season_num, ep.subtitle_file)} > {ep.title}</button>
          </div>
      )}  <hr></hr>
         </div>

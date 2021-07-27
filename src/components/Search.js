@@ -2,20 +2,26 @@ import { render } from "@testing-library/react";
 import React, { useState, useContext, useEffect } from "react";
 import { VIDEO_URL } from "../urls";
 import "./search.css";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
+import { axiosHandler, getToken } from "../helper";
+import ReactPaginate from "react-paginate";
+
 
 
 const Search = (props) =>{
+  const [reload, setReload] = useState(true)
 
-    const [fetching, setFetching] = useState(true)
+  const [fetching, setFetching] = useState(true)
   const [resultList, setResultList] = useState(true)
   const [error, setError] = useState(false)
   const [search, setSearch] = useState("")
   const [searchb, setSearchb] = useState("")
   let videos = []
   let debouncer;
+  const [currentPage, setCurrentPage] =useState(1)
+  const [otherList, setOtherList] =useState("")
+
 
   const {state:{userDetail}, dispatch} = useContext(store)
 useEffect(() =>{
@@ -31,64 +37,76 @@ useEffect(() =>{
   useEffect(() =>{
     
      clearTimeout(debouncer);
+     if (search !== ""){
       debouncer= setTimeout(() =>{
-        let extra = `?keyword=${search}`;
+        let extra = `?keyword=${search}&page=${currentPage}`;
         getSearchContent(extra)
       }, 1700)
-    
-  }, [search, searchb])
+     }else{
+      let extra1 = `?keyword=00000000000`;
+      getSearchContent(extra1)
+     }
+     
+  }, [search, searchb, reload])
 
-  const getSearchContent = (extra="") =>{
-    setFetching(true)
+
+      
+
+  const getSearchContent = async (extra="") =>{
    
-    axios.get(VIDEO_URL + extra).then(
-      res =>{
-       
-        console.log("Search results:::::::",res.data);
+    setFetching(true)
+    const token = await getToken(); 
+     const res = await axiosHandler({
+        method:"get",
+        url: VIDEO_URL + extra,
+        token
+      }).catch((e) => {
+        console.log("Error in Search::::",e);
+        setError(true)
+      });
 
-        const gg = res.data
-        for (var q in gg){
-          console.log("first object::::::",gg[q])
-          const gg2 = gg[q]
-         console.log("Videotype::::", gg2.videotype)
-          if (gg2.videotype === "Movie"){
-            const gg3 = gg2.movie
-            console.log("movie array", gg2.movie)
-            for(var e in gg3){
-              videos= [...videos, gg3[e]];
-              console.log("Movie found:::", gg3[e])
-            }
+      if(res){
+        
+     console.log("Search results:::::::", res.data.results);
+        setOtherList(res.data)
+     const gg = res.data.results
+     for (var q in gg){
+       console.log("first object::::::",gg[q])
+       const gg2 = gg[q]
+      console.log("Videotype::::", gg2.videotype)
+       if (gg2.videotype === "Movie"){
+         const gg3 = gg2.movie
+         console.log("movie array", gg2.movie)
+         for(var e in gg3){
+           videos= [...videos, gg3[e]];
+           console.log("Movie found:::", gg3[e])
+         }
 
-          }else if (gg2.videotype === "Series"){
-            const gg3 = gg2.series
-            console.log("series array", gg2.series)
-            for(var e in gg3){
-              videos= [...videos, gg3[e]];
-              console.log("Series found:::", gg3[e])
-            }
-          }else{
-            console.log("Error uncategorized video found")
-            alert("Error uncategorized video found")
-           }
+       }else if (gg2.videotype === "Series"){
+         const gg3 = gg2.series
+         console.log("series array", gg2.series)
+         for(var e in gg3){
+           videos= [...videos, gg3[e]];
+           console.log("Series found:::", gg3[e])
+         }
+       }else{
+         console.log("Error uncategorized video found")
+         alert("Error uncategorized video found")
         }
-        console.log("Final videos:::", videos)
-        setResultList(videos)
-        setFetching(false)
+     }
+     console.log("Final videos:::", videos)
+     setResultList(videos)
+     setFetching(false)
 
       }
-      ).catch(
-        (err) =>{
-          console.log(err);
-          setError(true)
-        }
-    )
   }
 
   if (error){
     return(
    
             <div className="MainSearch">
-              <h4 className="H4Group">Connection failed, try again!!!</h4>
+              <h4 className="H4Group"  >Connection failed!  &nbsp;&nbsp; <button onClick={() => setReload(!reload)} >  Retry</button></h4>
+
         </div>
           
     
@@ -102,7 +120,7 @@ useEffect(() =>{
                 <div className="form1">
                 <input type="text" className="searchTerm" placeholder="What are you looking for?" value={search}  onChange={e => setSearch(e.target.value)}/>
                 <button className="searchButton" onClick={e => setSearchb(e.target.value)}>
-                    <img src="/images/search-icon.svg"/>
+                    <img src="/images/search-icon.svg" alt="search"/>
                 </button>
                 </div>
                 
@@ -110,12 +128,29 @@ useEffect(() =>{
         </div>
         <div className="AppendResults">
         {fetching ? (
-                 <div className="H4Group">
-                 Loading...
-             </div>
+                <h4 id="loaderhome"> </h4>
             ):(
-
+<>
               <ResultsDisplay data={resultList}/>
+              <div>
+
+
+<ReactPaginate 
+pageCount={Math.ceil(otherList.count/10)}  
+pageRangeDisplayed ={7} 
+previousLabel={"← Previous"}
+nextLabel={"Next →"}
+onPageChange ={(e) => setCurrentPage(e.selected +1 )}
+marginPagesDisplayed={1}
+previousLinkClassName={"pagination__link"}
+nextLinkClassName={"pagination__link"}
+containerClassName={'pagination'}
+activeClassName={'active'}
+// subContainerClassName={'pages pagination'}
+forcePage={currentPage - 1 }
+/>
+        
+</div></>
 
                 )}
         </div>

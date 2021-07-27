@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
 import { MOVIE_URL } from '../urls';
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
+import ReactPaginate from "react-paginate";
+import {currentPageMovieAction} from "../stateManagement/actions";
 
  
 
@@ -19,9 +20,15 @@ const Movies = props =>{
     const [recommendedList, setRecommendedList] = useState(true)
     const [newList, setNewList] = useState(true)
     const [trendingList, setTrendingList] = useState(true)
+    const [reload, setReload] = useState(true)
+    // const [currentPage, setCurrentPage] =useState(1)
+     const [otherList, setOtherList] =useState("")
+     const {state:{userDetail}, dispatch} = useContext(store)
+
+
     
 
-    const {state:{userDetail}, dispatch} = useContext(store)
+    const {state:{currentPageMovie}} = useContext(store)
     useEffect(() =>{
         if(!userDetail.user.is_verified){
             window.location.href = "/verify";
@@ -32,15 +39,17 @@ const Movies = props =>{
     }, [])
 
     useEffect(() =>{
-        getMoviesContent()
-     }, [])
+        let extra = `?page=${currentPageMovie}`;
+        getMoviesContent(extra)
+     }, [reload, currentPageMovie])
 
    
-     const getMoviesContent =async () =>{
+     const getMoviesContent =async (extra="") =>{
+         setFetching(true)
         const token = await getToken();
         const res = await axiosHandler({
            method:"get",
-           url: MOVIE_URL,
+           url: MOVIE_URL+ extra,
            token
          }).catch((e) => {
            console.log("Error in Movies::::",e);
@@ -48,29 +57,30 @@ const Movies = props =>{
          });
    
          if(res){
-           setMoviesList(res.data)
+            setOtherList(res.data)
+           setMoviesList(res.data.results)
                
-           console.log("Movieslist Home::::", res.data);
-           const g = res.data
+           console.log("Movieslist Home::::", res.data.results);
+           const g = res.data.results
            for (var i in g){
               const tags = g[i].tags;
               console.log("tags in here:::::", tags)
             for (var t in tags){
               console.log("inner tags:::", tags[t])
-              if (tags[t].title=="Recommended"){
+              if (tags[t].title==="Recommended"){
                   console.log("got a recommended::::")
                 recommends = [...recommends, g[i]];
                 console.log("final data:::", g[i] )
                   console.log("THis is final recommended::::",recommends)
               }
-              if (tags[t].title=="New"){
+              if (tags[t].title==="New"){
                   console.log("got a new::::")
                 newones = [...newones, g[i]];
                 console.log("final data:::", g[i] )
                   console.log("THis is final new::::", newones)
               }
           
-              if (tags[t].title=="Trending"){
+              if (tags[t].title==="Trending"){
                   console.log("got a trending::::")
                 trending = [...trending, g[i]];
                 console.log("final data:::", g[i] )
@@ -97,11 +107,11 @@ const Movies = props =>{
         return(<>
            {error ? (
                 <div className="MoviesMain">
-                  <h4 className="H4Group">Connection failed, try again!!!</h4>
+           <h4 className="H4Group"  >Connection failed!  &nbsp;&nbsp; <button onClick={() => setReload(!reload)} >  Retry</button></h4>
             </div>
                ) : (
                 <div className="MoviesMain">
-                <h4 className="H4Group">Loading ...</h4>
+         <h4 id="loaderhome"> </h4>
             </div>
                    )}
             
@@ -116,7 +126,25 @@ const Movies = props =>{
         <MoviesNew data={newList}/>
         <MoviesTrending data={trendingList}/>
 
+        <div>
+{!fetching && (
 
+<ReactPaginate 
+pageCount={Math.ceil(otherList.count/10)}  
+pageRangeDisplayed ={7} 
+previousLabel={"← Previous"}
+nextLabel={"Next →"}
+onPageChange ={(e) => dispatch({type:currentPageMovieAction, payload:e.selected+1})}
+marginPagesDisplayed={1}
+previousLinkClassName={"pagination__link"}
+nextLinkClassName={"pagination__link"}
+containerClassName={'pagination'}
+activeClassName={'active'}
+// subContainerClassName={'pages pagination'}
+forcePage={currentPageMovie - 1 }
+/>
+          )}
+</div>
         </div>
     )
 }

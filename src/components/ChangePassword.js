@@ -1,11 +1,7 @@
-import { Link } from "react-router-dom";
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { CHANGE_PASSWORD_URL } from '../urls';
-import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
 import "./changePassword.css";
-import {userDetailAction} from "../stateManagement/actions";
 
 const ChangePassword = (props) => {
     const [passdata, setPassData] = useState("")
@@ -29,8 +25,8 @@ const ChangePassword = (props) => {
           data: passdata,
           token,
         }).catch((e) => {
-            alert(e.response.data.error)
-            console.log(e.response.data.error)
+            alert(e)
+            console.log(e)
         });
         if (res) {
             console.log("res data:::", res.data)

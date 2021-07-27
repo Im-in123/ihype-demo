@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext, useEffect} from "react";
 import "./detail.css";
 import { MOVIE_URL, ADD_TO_LIST_URL, CHECK_WATCHLIST_URL, } from '../urls';
-import axios from "axios";
 import { ReactVideo } from "reactjs-media";
 import ReactPlayer from 'react-player'
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
+let debouncer;
+
 
 
 const MovieDetail = (props) => {
@@ -23,6 +23,8 @@ const MovieDetail = (props) => {
   const [watchfetch, setWatchFetch] = useState("false");
   const [watcherror, setWatcherror] = useState("false");
   const [finalwatch, setFinalwatch] = useState(false)
+  const [reload, setReload] = useState(true)
+
 
   const {state:{userDetail}} = useContext(store)
   useEffect(() =>{
@@ -39,9 +41,10 @@ const MovieDetail = (props) => {
     console.log(props)
     getMovieDetail(props)
    resize();
-}, []);
+}, [reload]);
 
 const getMovieDetail = async (props) =>{
+  setFetching(true)
   const token = await getToken();
  const res = await axiosHandler({
     method:"get",
@@ -63,40 +66,50 @@ const getMovieDetail = async (props) =>{
 }
 
 const handleToggleButtonClick = (e) => {  
-  // if (isShown) return
-  // resize ()
+ 
   const eli = document.getElementById('eli')
   console.log("eli:::::",eli)
   eli.classList.add("DetailBackground1");
-
-  
    setIsShown(true)
   console.log("Set to true::::")
-  // eli.classList.remove("DetailBackground");
- 
+
 }
 
 const handleCloseButtonClick = (e) => {
-  // resize()
-  // eli.classList.add("DetailBackground");
+ 
      setIsShown(false)
     console.log("Set to false::::")
-    // eli.classList.remove("DetailBackground1");
 
 
 }
 const handleTrailer = (e) => {
-  // resize()
      setTrailer(true)
      handleToggleButtonClick()
     console.log("Set trailer to true::::")
 
 }
 const handleVideo = (e) => {
-  // resize()
      setTrailer(false)
      handleToggleButtonClick()
     console.log("Set video to true::::")
+
+    // clearTimeout(debouncer);
+    // debouncer= setTimeout(() =>{
+    //   try {
+    //     console.log("debouncer started")
+    //     let vv= document.getElementById('vivi')
+    //     console.log(vv)
+    //     vv.onended = function () {
+    //       this.load();
+    //       this.play();
+    //       this.currentTime = 17;
+    //     };
+    //     console.log("debouncer ended")
+
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // }, 3700)
 
 }
 const resize = (e) => {
@@ -131,7 +144,7 @@ const checkAddtoList =async (e)=>{
     console.log("checkWatchlist result::::",checkadd.data)
     const rr = checkadd.data['data']
     console.log("cccc::::",rr)
-    if(rr =="exist-true"){
+    if(rr ==="exist-true"){
       setFinalwatch(true)
       setWatchFetch(false)
     }else{
@@ -181,11 +194,11 @@ if (fetching){
   return(<div className="DetailContainer">
      {error ? (
           
-            <h4 className="H4Group">Connection failed, try again!!!</h4>
+          <h4 className="H4Group"  >Connection failed!  &nbsp;&nbsp; <button onClick={() => setReload(!reload)} >  Retry</button></h4>
      
          ) : (
-          <h4 className="H4Group">Loading ...</h4>
-             )}
+          <h4 id="loaderdetail"> </h4>
+          )}
       
       </div>
   )
@@ -275,20 +288,29 @@ if (fetching){
          <p>Trailer Not available</p> 
    </>  )}
   </>  ) :(<>
-     <p>{detailData.title} - {detailData.subtitle}</p>
+        {detailData.video ? (<>
+          <p>{detailData.title} - {detailData.subtitle}</p>
      <button onClick={handleCloseButtonClick}>
   X Close Video 
   </button> 
-          <video src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover}></video>
-      
+          <video id="vivi" playbackrate="1" src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover} crossorigin="anonymous">
+          <track src={detailData.subtitle_file} label="English" srcLang="en-us" kind="subtitles"  default />
+          {/* <track src="/French_captions_file.vtt" label="French" kind="subtitles" srclang="fr" /> */}
+          </video>
+            
+             </> ):(<>
+  <p>{detailData.title} - {detailData.subtitle}</p>
+  <button onClick={handleCloseButtonClick}>
+X Close 
+</button>  
+<p>Movie Not available</p> 
+
+      </> ) }
+
        </> )}
           </div>
 
-          {/* <div className="DetailVideo">
-            <p>react-player Package</p>
-          <ReactPlayer url={detailData.video} playing={false} controls={true} light={true} playbackRate="1"  poster={detailData.cover}/>
-          </div>  */}
-
+         
           {/* <div>
             <p>reactjs-media Package</p>
          <ReactVideo
@@ -307,9 +329,7 @@ if (fetching){
  
 };
 
-const vv =props=>{
 
-}
 export default MovieDetail;
 
 

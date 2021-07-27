@@ -1,7 +1,7 @@
 .DetailContainer{
     position: relative;
     min-height: calc(100vh-250px);
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
     display: block;
     top: 72px;
     padding: 0 calc(3.5vw + 5px);
@@ -460,3 +460,37 @@
 
 
 }
+
+
+#loaderdetail {
+    position: absolute;
+    z-index: 1;
+    margin: auto;
+    /* border: 4px solid #faf8f8; */
+    border: 3px solid rgb(240, 29, 58);
+    border-radius: 50%;
+    border-top: 4px solid #161616;
+    width: 30px;
+    height: 30px;
+    -webkit-animation: spin 0.7s linear infinite;
+    animation: spin 0.7s linear infinite;
+    margin-left:42%;
+    margin-right:45%;
+    margin-top: 20%;
+  }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  
+  @media only screen and (max-width: 768px) {
+      #loaderdetail{
+        margin-left:41%;
+        margin-right:45%;
+        margin-top: 45%  !important;
+       
+
+      }
+    }
+  

@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
+import React, { useState, useContext,  } from "react";
 import { FORGOT_PASSWORD_URL } from '../urls';
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
 import "./forgotPassword.css";
-import {userDetailAction} from "../stateManagement/actions";
 
 
 
@@ -52,7 +50,7 @@ return(
 
         <div class="container-center">
     <center>
-    <img  />
+    {/* <img  /> */}
       </center>
   <h2>Don't Worry!</h2>
   <form className="formf" method="POST" onSubmit={submit}>

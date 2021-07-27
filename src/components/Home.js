@@ -1,16 +1,24 @@
-import { Link, withRouter } from 'react-router-dom';
-import Loader from "../components/loader";
+import { Link} from 'react-router-dom';
 import { VIDEO_URL } from '../urls';
 import "./home.css";
 import React, { useState, useContext, useEffect } from "react";
 import { store } from "../stateManagement/store";
-import axios from "axios";
+import { axiosHandler, getToken } from "../helper";
+import ReactPaginate from "react-paginate";
+import {currentPageHomeAction} from "../stateManagement/actions";
+
 
 const Home = (props) => {
      const {state:{userDetail}, dispatch} = useContext(store)
      console.log("userDetail::::::::::", userDetail)
      const [fetching, setFetching] = useState(true)
      const [VideoList, setVideoList] = useState(true)
+     const [reload, setReload] = useState(true)
+    //  const [currentPage, setCurrentPage] =useState(1)
+     const [otherList, setOtherList] =useState("")
+     const {state:{currentPageHome}} = useContext(store)
+
+
 
      const [error, setError] = useState(false)
      let recommends = [];
@@ -30,95 +38,96 @@ const Home = (props) => {
       }
       if(!userDetail.is_verified){
         window.location.href = "/profile-update";
+      }else{
+        let extra = `?page=${currentPageHome}`;
+        getVideoContent(extra)
       }
-
-       getVideoContent()
-    }, [])
-
-
-const getVideoContent = () =>{
-        
-  axios.get(VIDEO_URL).then(
-  res =>{
-      setVideoList(res.data)
      
-      console.log(" Home Video List::::", res.data);
-     
-      const gg = res.data
-      for (var q in gg){
-        console.log("first object::::::",gg[q])
-        const gg2 = gg[q]
-       console.log("Videotype::::", gg2.videotype)
-        if (gg2.videotype === "Movie"){
-          const gg3 = gg2.movie
-          console.log("movie array", gg2.movie)
-          for(var e in gg3){
-            videos= [...videos, gg3[e]];
-            console.log("Movie found:::", gg3[e])
-          }
+    }, [reload,currentPageHome])
 
-        }else if (gg2.videotype === "Series"){
-          const gg3 = gg2.series
-          console.log("series array", gg2.series)
-          for(var e in gg3){
-            videos= [...videos, gg3[e]];
-            console.log("Series found:::", gg3[e])
-          }
-        }else{
-          console.log("Error uncategorized video found")
-          alert("Error uncategorized video found")
-         }
-      }
-    console.log("Video List:::", videos)
+   
+const getVideoContent = async(extra ='') =>{
+  setFetching(true)
 
-      const g = videos
-        for (var i in g){
-            const tags = g[i].tags;
-            console.log("tags in here:::::", tags)
-          for (var t in tags){
-            console.log("inner tags:::", tags[t])
-            if (tags[t].title=="Recommended"){
-                console.log("got a recommended::::")
-              // recommendedList.push[g[i]]
-              // setRecommendedList([g[i]].concat(recommendedList))
-            // setRecommendedList(recommendedList => [...recommendedList, g[i]])
-              //setRecommendedList(recommendedList => recommendedList.concat(g[i]))
-              recommends = [...recommends, g[i]];
-              console.log("final data:::", g[i] )
-                console.log("THis is final recommended::::",recommends)
-            }
-            if (tags[t].title=="New"){
-                console.log("got a new::::")
-              newones = [...newones, g[i]];
-              console.log("final data:::", g[i] )
-                console.log("THis is final new::::", newones)
-            }
+  const token = await getToken();
+  const res = await axiosHandler({
+     method:"get",
+     url: VIDEO_URL+extra,
+     token
+   }).catch((e) => {
+    console.log("Error in Home Videos::::",e);
+    setError(true)
+   });
 
-            if (tags[t].title=="Trending"){
-                console.log("got a trending::::")
-              trending = [...trending, g[i]];
-              console.log("final data:::", g[i] )
-                console.log("THis is final trending::::", trending)
-            }
-        }
-        console.log("recommends temp check:::", recommends)
+   if(res){
+    setOtherList(res.data)
+    setVideoList(res.data.results)
 
+    console.log(" Home Video List::::", res.data);
+   
+    const gg = res.data.results
+    for (var q in gg){
+      // console.log("first object::::::",gg[q])
+      const gg2 = gg[q]
+    //  console.log("Videotype::::", gg2.videotype)
+      if (gg2.videotype === "Movie"){
+        const gg3 = gg2.movie
+        // console.log("movie array", gg2.movie)
+        for(var e in gg3){
+          videos= [...videos, gg3[e]];
+          // console.log("Movie found:::", gg3[e])
         }
 
-     setRecommendedList(recommends)
-     setNewList(newones)
-     setTrendingList(trending)
+      }else if (gg2.videotype === "Series"){
+        const gg3 = gg2.series
+        // console.log("series array", gg2.series)
+        for(var e in gg3){
+          videos= [...videos, gg3[e]];
+          // console.log("Series found:::", gg3[e])
+        }
+      }else{
+        console.log("Error uncategorized video found")
+        alert("Error uncategorized video found")
+       }
+    }
+  console.log("Video List:::", videos)
 
-     console.log("OG FINAL recommend::::::", recommendedList)
-   setFetching(false)
+    const g = videos
+      for (var i in g){
+          const tags = g[i].tags;
+          // console.log("tags in here:::::", tags)
+        for (var t in tags){
+          // console.log("inner tags:::", tags[t])
+          if (tags[t].title==="Recommended"){
+          //setRecommendedList(recommendedList => recommendedList.concat(g[i]))
+            recommends = [...recommends, g[i]];
+            
+          }
+          if (tags[t].title==="New"){
+              // console.log("got a new::::")
+            newones = [...newones, g[i]];
+            
+          }
 
-  }
-  ).catch(
-      (err) =>{
-      console.log("Error in Home Videos::::",err);
-      setError(true)
+          if (tags[t].title==="Trending"){
+              // console.log("got a trending::::")
+            trending = [...trending, g[i]];
+
+          }
       }
-  )
+      console.log("recommends temp check:::", recommends)
+
+      }
+
+   setRecommendedList(recommends)
+   setNewList(newones)
+   setTrendingList(trending)
+
+   console.log("OG FINAL recommend::::::", recommendedList)
+ setFetching(false)
+   }
+
+ 
 }
 
 
@@ -126,17 +135,21 @@ if (fetching){
  return(<>
     {error ? (
          <div className="TypesMain">
-           <h4 className="H4Group">Connection failed, try again!!!</h4>
+           <h4 className="H4Group"  >Connection failed!  &nbsp;&nbsp; <button onClick={() => setReload(!reload)} >  Retry</button></h4>
+
      </div>
         ) : (
          <div className="TypesMain">
-         <h4 className="H4Group">Loading ...</h4>
+         <h4 id="loaderhome"> </h4>
      </div>
             )}
      
      </>
  )
 }
+// function handlePageClick({ selected: selectedPage }) {
+//   setCurrentPage(selectedPage);
+// }
 
 return (
   <div className="TypesMain">
@@ -147,6 +160,25 @@ return (
   <New data={newList}/>
   <Trending data={trendingList}/>
 
+<div>
+{!fetching && (
+
+<ReactPaginate 
+pageCount={Math.ceil(otherList.count/10)}  
+pageRangeDisplayed ={7} 
+previousLabel={"← Previous"}
+nextLabel={"Next →"}
+onPageChange ={(e) => dispatch({type:currentPageHomeAction, payload:e.selected+ 1})}
+marginPagesDisplayed={1}
+previousLinkClassName={"pagination__link"}
+nextLinkClassName={"pagination__link"}
+containerClassName={'pagination'}
+activeClassName={'active'}
+// subContainerClassName={'pages pagination'}
+forcePage={currentPageHome - 1 }
+/>
+          )}
+</div>
 
   </div>
 )

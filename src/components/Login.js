@@ -1,10 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./login.css";
 import { LOGIN_URL } from "../urls";
 import { checkAuthState, tokenName } from "../customs/authController";
 import { axiosHandler, errorHandler } from "../helper";
 import { Link } from "react-router-dom";
-import Loader from "../components/loader";
+import visibility from "../assets/visibility.svg";
+import visibility_off from "../assets/visibility_off.svg"
 
 
 export const loginRequest = async (data, setError, props) => {
@@ -25,7 +26,6 @@ export const loginRequest = async (data, setError, props) => {
 
 
 const Login= (props) => {
-  const [btLoading, setBtLoading] = useState(true);
   const [loginData, setLoginData] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -52,7 +52,6 @@ const Login= (props) => {
   };
 
   const onChange = (e) => {
-     // console.log(e.target.value)
     setLoginData({
       ...loginData,
       [e.target.name]: e.target.value,
@@ -69,28 +68,19 @@ const Login= (props) => {
       //   backgroundSize:'100vw 100vh',
       //   width:'100vw',
       //   height:'100vh',
-      
       //               }}
                     >
 
 
-         <div className="login-wrap" 
-         style={{ 
-  backgroundImage: `url(${process.env.PUBLIC_URL + '/images/2.png'})` ,
-  backgroundRepeat: 'no-repeat',
-
-              }}
-              >
-    {/* <div className="login-wrap" >          
-       <img src="/images/iHype3.bmp" className="oby"/> */}
-
+         <div className="login-wrap">
+  
 	<div className="login-html">
 
     <div className="errorHolder">
     {error && (
         <div >
           <div className="errordiv" dangerouslySetInnerHTML={{ __html: error }} />
-          <img src="/images/close.png" alt = "replace soon" onClick={() => setError(null)} />
+          <img src="/images/close_white.svg" alt = "X" onClick={() => setError(null)} />
         </div>
     )}
      </div>
@@ -106,7 +96,13 @@ const Login= (props) => {
 				</div>
 				<div className="group">
 					<label htmlFor="pass" className="label">Password</label>
-					<input id="pass" type="password" className="input" data-type="password" name="password" onChange={onChange} value={loginData.password} required/>
+					<input id="pass" className="input" data-type="password" name="password" onChange={onChange} value={loginData.password} required
+          type={!showPassword ? "password" : "text"}
+          />
+          <p id="showshide"><img
+                      src={!showPassword ? visibility : visibility_off}
+                      onClick={() => setShowPassword(!showPassword)}
+                   alt="show/hide password" /></p><br></br>
 				</div>
 				<div className="group">
 					<input id="check" type="checkbox" name="check" className="check" onChange={onChange}/>
@@ -122,7 +118,7 @@ const Login= (props) => {
 				</div>
                 {loading ? 
             <center>
-              <p id="loader"></p>
+              <p id="loaderlogin"></p>
             </center>
            : ""
         }
