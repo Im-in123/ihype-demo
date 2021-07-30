@@ -194,7 +194,7 @@ const SeriesNew = (props) =>{
         }
     return(
         <div className="New">
-        <h4 className="H4Group">New to Astroworld+</h4>
+        <h4 className="H4Group">New to iHype+</h4>
                 <div className="NewContent">
                 {props.data.map((item,key)=>
                         <div className="NewWrap" key={key}>

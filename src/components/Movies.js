@@ -186,7 +186,7 @@ const MoviesNew = (props) =>{
         }
     return(
         <div className="NewMovies">
-        <h4 className="H4Group">New to Astroworld+</h4>
+        <h4 className="H4Group">New to iHype+</h4>
                 <div className="NewMoviesContent">
                 {props.data.map((item,key)=>
                         <div className="NewMoviesWrap" key={key}>
