@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import React, { useState, useContext, useEffect } from "react";
-import { MOVIE_URL } from '../urls';
+import { MOVIE_URL, LOCAL_CHECK } from '../urls';
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
 import ReactPaginate from "react-paginate";
 import {currentPageMovieAction} from "../stateManagement/actions";
-
- 
-
 import "./movies.css";
+
 
 const Movies = props =>{
     const [fetching, setFetching] = useState(true)
@@ -24,7 +22,6 @@ const Movies = props =>{
     // const [currentPage, setCurrentPage] =useState(1)
      const [otherList, setOtherList] =useState("")
      const {state:{userDetail}, dispatch} = useContext(store)
-
 
     
 
@@ -164,7 +161,9 @@ const MoviesRecommended =(props)=>{
          {props.data.map((item,key)=>
             <div className="RecommendedMoviesWrap" key={key}>
                <Link to={`/detail/`+ "movie/"+item.slug}>
-            <img src={item.cover} alt={item.title} />
+            {/* <img src={item.cover} alt={item.title} /> */}
+            <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
+
             </Link>
             </div>
          )} 
@@ -192,7 +191,7 @@ const MoviesNew = (props) =>{
                 {props.data.map((item,key)=>
                         <div className="NewMoviesWrap" key={key}>
                            <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                                 <img src={item.cover} alt={item.title} />
+                           <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                             </Link>
                  </div>
          )} 
@@ -222,7 +221,7 @@ const MoviesTrending = (props) =>{
                          {props.data.map((item,key)=>
                         <div className="TrendingMoviesWrap" key={key}>
                            <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                                 <img src={item.cover} alt={item.title} />
+                           <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                             </Link>
                  </div>
          )} 

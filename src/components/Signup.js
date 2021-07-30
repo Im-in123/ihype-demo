@@ -112,7 +112,7 @@ const Signup = (props) =>{
                   {loading ? 
                   <div>
             <center>
-            <p id="loader"></p>
+            <p id="loaderlogin"></p>
             </center>
             </div>
            : ""

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { useState, useContext, useEffect } from "react";
-import { SERIES_URL } from '../urls';
+import { SERIES_URL, LOCAL_CHECK } from '../urls';
 import { store } from "../stateManagement/store";
 import ReactPaginate from "react-paginate";
 import { axiosHandler, getToken } from "../helper";
@@ -171,7 +171,7 @@ const SeriesRecommended =(props)=>{
          {props.data.map((item,key)=>
             <div className="RecommendedWrap" key={key}>
                <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                 <img src={item.cover} alt={item.title} />
+               <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                </Link>
             </div>
          )} 
@@ -199,7 +199,7 @@ const SeriesNew = (props) =>{
                 {props.data.map((item,key)=>
                         <div className="NewWrap" key={key}>
                            <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                                 <img src={item.cover} alt={item.title} />
+                           <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                             </Link>
                  </div>
          )} 
@@ -228,7 +228,7 @@ const Trending = (props) =>{
                          {props.data.map((item,key)=>
                         <div className="TrendingWrap" key={key}>
                            <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                                 <img src={item.cover} alt={item.title} />
+                           <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                             </Link>
                  </div>
          )} 
@@ -248,36 +248,3 @@ const Trending = (props) =>{
 
 
 export default Series;
-
-// for (var i in g){
-//     const tags = g[i].tags;
-//     console.log("tags in here:::::", tags)
-//   for (var t in tags){
-//     console.log("inner tags:::", tags[t])
-//     if (tags[t].title=="Recommended"){
-//         console.log("got a recommended::::")
-//        // recommendedList.push[g[i]]
-//       // setRecommendedList([g[i]].concat(recommendedList))
-//     // setRecommendedList(recommendedList => [...recommendedList, g[i]])
-//       //setRecommendedList(recommendedList => recommendedList.concat(g[i]))
-//       recommends = [...recommends, g[i]];
-//       console.log("final data:::", g[i] )
-//         console.log("THis is final recommended::::",recommends)
-//     }
-//     if (tags[t].title=="New"){
-//         console.log("got a new::::")
-//       newones = [...newones, g[i]];
-//       console.log("final data:::", g[i] )
-//         console.log("THis is final new::::", newones)
-//     }
-
-//     if (tags[t].title=="Trending"){
-//         console.log("got a trending::::")
-//       trending = [...trending, g[i]];
-//       console.log("final data:::", g[i] )
-//         console.log("THis is final trending::::", trending)
-//     }
-//  }
-//  console.log("recommends temp check:::", recommends)
-
-// }

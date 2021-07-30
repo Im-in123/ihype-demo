@@ -32,7 +32,7 @@ const Verify = props =>{
  
        if(res){
          let p = document.getElementById("p")
-         let b = document.getElementById("p")
+         let b = document.getElementById("b")
 
          alert("Request has been resent. Check your email!!")
          p.innerHTML  = "Request has been resent, check your email.You can only request another one in 30 minutes!!"

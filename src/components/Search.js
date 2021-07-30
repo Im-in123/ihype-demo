@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 import React, { useState, useContext, useEffect } from "react";
-import { VIDEO_URL } from "../urls";
+import { VIDEO_URL, LOCAL_CHECK } from "../urls";
 import "./search.css";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
@@ -132,7 +132,7 @@ useEffect(() =>{
             ):(
 <>
               <ResultsDisplay data={resultList}/>
-              <div>
+         <div>
 
 
 <ReactPaginate 
@@ -175,7 +175,7 @@ const ResultsDisplay = (props) =>{
                 {props.data.map((item,key)=>
                         <div className="ResultsWrap" key={key}>
                            <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                                 <img src={item.cover} alt={item.title} />
+                           <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                             </Link>
                  </div>
          )} 

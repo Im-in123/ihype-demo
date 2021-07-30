@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect} from "react";
 import "./detail.css";
-import { MOVIE_URL, ADD_TO_LIST_URL, CHECK_WATCHLIST_URL, } from '../urls';
+import { MOVIE_URL, ADD_TO_LIST_URL, CHECK_WATCHLIST_URL, LOCAL_CHECK } from '../urls';
 import { ReactVideo } from "reactjs-media";
 import ReactPlayer from 'react-player'
 import { store } from "../stateManagement/store";
@@ -209,12 +209,16 @@ if (fetching){
     <div className="DetailContainer">
     {small ? (
        <div className="DetailBackground" id="eli">
-       <img alt={detailData.title} src={detailData.background_small_screen} />
+       {/* <img alt={detailData.title} src={detailData.background_small_screen} /> */}
+       <img alt={detailData.title} src={LOCAL_CHECK ? detailData.background_small_screen : detailData.small_screen_url} />
+
   </div>
     ):(
       
       <div className="DetailBackground" id="eli">
-      <img alt={detailData.title} src={detailData.background_big_screen} />
+      {/* <img alt={detailData.title} src={detailData.background_big_screen} /> */}
+      <img alt={detailData.title} src={LOCAL_CHECK ? detailData.background_big_screen : detailData.big_screen_url} />
+
    </div>
 
     )}
@@ -280,7 +284,9 @@ if (fetching){
         <button onClick={handleCloseButtonClick}>
         X Close trailer
         </button> 
-    <video src={detailData.trailer} autoPlay={true} controls="controls" poster={detailData.cover} />
+    {/* <video src={detailData.trailer} autoPlay={true} controls="controls" poster={detailData.cover} /> */}
+    <video src={detailData.trailer} autoPlay={true} controls="controls" poster={LOCAL_CHECK ? detailData.cover : detailData.cover_url} />
+
    </> ):(<>
       <button onClick={handleCloseButtonClick}>
       X Close 
@@ -293,7 +299,8 @@ if (fetching){
      <button onClick={handleCloseButtonClick}>
   X Close Video 
   </button> 
-          <video id="vivi" playbackrate="1" src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover} crossorigin="anonymous">
+          {/* <video id="vivi" playbackrate="1" src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover} crossorigin="anonymous"> */}
+          <video id="vivi" playbackrate="1" src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover_url} crossorigin="anonymous">
           <track src={detailData.subtitle_file} label="English" srcLang="en-us" kind="subtitles"  default />
           {/* <track src="/French_captions_file.vtt" label="French" kind="subtitles" srclang="fr" /> */}
           </video>

@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect,  useLayoutEffect} from "react";
-import { Link } from "react-router-dom";
 import "./detail.css";
 import { store } from "../stateManagement/store";
-import { ADD_TO_LIST_URL, CHECK_WATCHLIST_URL, SERIES_URL } from '../urls';
+import { ADD_TO_LIST_URL, CHECK_WATCHLIST_URL, SERIES_URL, LOCAL_CHECK } from '../urls';
 import { ReactVideo } from "reactjs-media";
 import ReactPlayer from 'react-player'
 import {currentSeriesVideoAction} from "../stateManagement/actions";
@@ -21,7 +20,6 @@ const SeriesDetail = (props) => {
   const [error, setError] = useState(false)
   const [watchfetch, setWatchFetch] = useState("false");
   const [watcherror, setWatcherror] = useState("false");
-  // const [initialwatch, setInitialwatch] = useState("false");
 
 
 
@@ -250,12 +248,16 @@ if (fetching){
     <div className="DetailContainer">
     {small ? (
        <div className="DetailBackground" id="eli">
-       <img alt={detailData.title} src={detailData.background_small_screen} />
+       {/* <img alt={detailData.title} src={detailData.background_small_screen} /> */}
+       <img alt={detailData.title} src={LOCAL_CHECK ? detailData.background_small_screen : detailData.small_screen_url} />
+
   </div>
     ):(
       
       <div className="DetailBackground" id="eli">
-      <img alt={detailData.title} src={detailData.background_big_screen} />
+      {/* <img alt={detailData.title} src={detailData.background_big_screen} /> */}
+      <img alt={detailData.title} src={LOCAL_CHECK ? detailData.background_big_screen : detailData.big_screen_url} />
+
    </div>
 
     )}
@@ -325,7 +327,7 @@ if (fetching){
         <button onClick={handleCloseButtonClick}>
         X Close trailer
         </button> 
-    <video src={detailData.trailer} autoPlay={true} controls="controls" poster={detailData.cover} />
+    <video src={detailData.trailer} autoPlay={true} controls="controls" poster={LOCAL_CHECK ? detailData.cover : detailData.cover_url} />
    </> ):(<>
       <button onClick={handleCloseButtonClick}>
       X Close 

@@ -1,11 +1,6 @@
 import { Link } from "react-router-dom";
-import React, { useState, useContext, useEffect } from "react";
-import axios from "axios";
-import { PROFILE_URL } from '../urls';
-import { store } from "../stateManagement/store";
-import { axiosHandler, getToken } from "../helper";
+import React from "react";
 import "./settings.css";
-import {userDetailAction} from "../stateManagement/actions";
 
 const Settings = (props) => {
 

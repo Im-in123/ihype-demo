@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useState, useContext, useEffect } from "react";
 import "./watchlist.css";
-import { WATCHLIST_URL } from '../urls';
+import { WATCHLIST_URL, LOCAL_CHECK } from '../urls';
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
 import ReactPaginate from "react-paginate";
@@ -147,7 +147,7 @@ const WatchResults =(props)=>{
          {props.data.map((item,key)=>     <>
             <div className="WatchWrap" key={key}>
             <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-            <img src={item.cover} alt={item.title} />
+            <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
             </Link>
             </div>
                                 {/* <p>Remove</p> */}

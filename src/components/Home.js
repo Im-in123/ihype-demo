@@ -1,5 +1,5 @@
 import { Link} from 'react-router-dom';
-import { VIDEO_URL } from '../urls';
+import { VIDEO_URL, LOCAL_CHECK } from '../urls';
 import "./home.css";
 import React, { useState, useContext, useEffect } from "react";
 import { store } from "../stateManagement/store";
@@ -293,7 +293,7 @@ const Recommended =(props)=>{
        {props.data.map((item,key)=>
           <div className="RecommendedWrap" key={key}>
             <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-              <img src={item.cover} alt={item.title} />
+            <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
             </Link>
           </div>
        )} 
@@ -321,7 +321,7 @@ const New = (props) =>{
               {props.data.map((item,key)=>
                       <div className="NewWrap" key={key}>
                            <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                               <img src={item.cover} alt={item.title} />
+                           <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                           </Link>
                </div>
        )} 
@@ -352,7 +352,7 @@ const Trending = (props) =>{
                        {props.data.map((item,key)=>
                       <div className="TrendingWrap" key={key}>
                            <Link to={`/detail/`+ item.core_type + "/" + item.slug}>
-                               <img src={item.cover} alt={item.title} />
+                           <img src={LOCAL_CHECK ? item.cover:item.cover_url} alt={item.title} />
                           </Link>
                </div>
        )} 
