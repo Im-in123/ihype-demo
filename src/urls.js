@@ -1,6 +1,6 @@
 // const BASE_URL ="http://192.168.43.77:8000/"; 
-const BASE_URL = "http://127.0.0.1:8000/";
-// const BASE_URL ="https://ihype.herokuapp.com/"; 
+// const BASE_URL = "http://127.0.0.1:8000/";
+const BASE_URL ="https://ihype.herokuapp.com/"; 
 
 export const LOGIN_URL = BASE_URL + "user/login";
 export const SIGNUP_URL = BASE_URL + "user/signup";
