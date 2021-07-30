@@ -111,7 +111,7 @@ const Watchlist = (props)=>{
 {!fetching && (
 
 <ReactPaginate 
-pageCount={Math.ceil(otherList.count/10)}  
+pageCount={Math.ceil(otherList.count/16)}  
 pageRangeDisplayed ={7} 
 previousLabel={"← Previous"}
 nextLabel={"Next →"}
