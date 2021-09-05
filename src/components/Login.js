@@ -42,6 +42,10 @@ const Login= (props) => {
     }
   }, []);
 
+  useEffect(() => {
+    alert("Site is under construction. Login with free account-> username:guest and password:guest")
+  }, [])
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);

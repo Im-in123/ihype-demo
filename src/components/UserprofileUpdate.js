@@ -65,7 +65,7 @@ const UserProfileUpdate =(props)=>{
 <div class="form-group a">
         <label for="name">Username</label>
         <input id="name" type="text"
-       value={userDetail.user.username +"      [NB:username cannot be modified!]"} 
+       value={userDetail.user.username +"    [NB:username cannot be modified!]"} 
         disabled/>
     </div>
 <div class="grid">
