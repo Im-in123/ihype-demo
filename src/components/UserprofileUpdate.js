@@ -142,7 +142,7 @@ const UserProfileUpdate =(props)=>{
 
     <div class="checkbox-group">
         <input id="newsletter" type="checkbox"/>
-        <label for="newsletter">Do you wanna recieve newsletter updates</label>
+        <label for="newsletter">Do you wanna recieve updates</label>
     </div>
 
    

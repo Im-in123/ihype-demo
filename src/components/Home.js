@@ -106,6 +106,7 @@ const getVideoContent = async(extra ='') =>{
           if (tags[t].title==="New"){
               // console.log("got a new::::")
             newones = [...newones, g[i]];
+
             
           }
 

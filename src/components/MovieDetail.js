@@ -269,7 +269,7 @@ if (fetching){
                 {detailData.subtitle}
           </div>
           <div className="DetailDescription">
-         {detailData.description} 
+         {detailData.description}  <br/> {detailData.other_info}
           </div>
         
       </div>
@@ -285,7 +285,7 @@ if (fetching){
         X Close trailer
         </button> 
     {/* <video src={detailData.trailer} autoPlay={true} controls="controls" poster={detailData.cover} /> */}
-    <video src={detailData.trailer} autoPlay={true} controls="controls" poster={LOCAL_CHECK ? detailData.cover : detailData.cover_url} />
+    <video src= {LOCAL_CHECK ? detailData.trailer: detailData.trailer_url} autoPlay={true} controls="controls" poster={LOCAL_CHECK ? detailData.cover : detailData.cover_url} />
 
    </> ):(<>
       <button onClick={handleCloseButtonClick}>
@@ -300,7 +300,7 @@ if (fetching){
   X Close Video 
   </button> 
           {/* <video id="vivi" playbackrate="1" src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover} crossorigin="anonymous"> */}
-          <video id="vivi" playbackrate="1" src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover_url} crossorigin="anonymous">
+          <video id="vivi" playbackrate="1" src={LOCAL_CHECK ? detailData.video: detailData.video_url} autoPlay={true} controls="controls" poster={detailData.cover_url} crossorigin="anonymous">
           <track src={detailData.subtitle_file} label="English" srcLang="en-us" kind="subtitles"  default />
           {/* <track src="/French_captions_file.vtt" label="French" kind="subtitles" srclang="fr" /> */}
           </video>

@@ -1,215 +1,197 @@
-.Header{
-    position: fixed;
-    top:0;
-    left:0;
-    right:0;
-    height: 70px;
-    background-color: #090b13; 
-    display: flex;
-    justify-content: space-between;
-    z-index: 3;
-    align-items: center;
-    padding: 0 25px;
-    letter-spacing: 3px;
-    /* font-family: 'Times New Roman', Times, serif; */
-font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding-left: 5px;
- 
-  }
- 
+.Header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  /* background-color: #090b13; */
+  background-color: #06060a;
+  display: flex;
+  justify-content: space-between;
+  z-index: 3;
+  align-items: center;
+  padding: 0 25px;
+  letter-spacing: 3px;
+  /* font-family: 'Times New Roman', Times, serif; */
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  padding-left: 5px;
+}
+
 .Logo {
-    padding: 0;
-    max-width: 70px;
-    margin-top: 4px;
-    height: 90px;
-  }
+  padding: 0;
+  max-width: 70px;
+  margin-top: 4px;
+  height: 90px;
+}
 
 .Logo img {
-    display: block;
-    width: 100%; 
-    height: 50%;   
-    margin-top: 21px;
-    border-radius: 4px;
-    border: 2px solid rgb(248, 248, 248);
-
-  
-    
-  }
+  display: block;
+  width: 100%;
+  height: 50%;
+  margin-top: 21px;
+  border-radius: 4px;
+  border: 2px solid rgb(248, 248, 248);
+}
 
 .NavMenu {
-    align-items: center;
-    display: flex;
-    flex-flow: row nowrap;
-    height: 100%; 
-    justify-content: flex-end;
-    margin:0;
-    padding: 0;
-    position: relative;
-    margin-right: auto;
-    margin-left: 25px;
-
+  align-items: center;
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+  justify-content: flex-end;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  margin-right: auto;
+  margin-left: 25px;
 }
 
 @media only screen and (max-width: 768px) {
-      .NavMenu{
-        display:none;
-      }
-      
-    .container {
-      width: 100%;
-      height: 100%;
-    }
-
-    .tutorial {
-      width: 100%;
-      margin: 0;
-      
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      /* background-color: #090b13;  */
-      background-color: #090b13; 
-      max-width: 250px;
-      height: 40px;
-    
-    }
-
-
-    .tutorial ul {
-     
-      padding-top:0px;
-      list-style-type: none;
-      padding-left: 0;
-      margin-top: 4px;
-      width: 167px;
-      padding-left: 1px;
-      align-items: center;
-      
-     
-    }
-
-    .tutorial ul  img{
-      padding:0;
-      width:15px;   
-      /* display: block; */
-    }
-  
-    .tutorial .img1{
-      font-size:50px;
-      height: 10px;
-      display: inline;
-    }
-
-    .tutorial ul li {
-      font-size: 14px;
-      color: white;
-      display: inline-block;
-      padding:2px;
-      position: relative;
-      margin-right:4px;
-     /* background-color: black; */
-     background-color: #090b13; 
-     height:38px;
-     padding-top: 10px;
-     box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
-     border-radius: 4px;
-     border: 1px solid rgba(151, 151, 151, 0.34);
-     /* border: 1px solid silver; */
-     text-transform: uppercase;
-     /* font-family: 'Times New Roman', Times, serif; */
-
-    }
-    
-    .tutorial ul li ul {
-      display: none;
-    }
-    /* .tutorial ul li ul.dropdown.closed { display: none; } */
-
-    .tutorial ul li:hover {
-      cursor: pointer;
-      background-color: rgb(226, 6, 6);
-      border-radius: 3px;
-      transition-duration: 0.1s;
-    transform: scale(1.08);
-
-    }
-    .tutorial ul li:hover ul {
-      display: block;
-      margin-top: 3px;
-      width: 71px;
-      padding-left: 0;
-      position: absolute;
-      letter-spacing: 1px;
-      /* display: flex;
-      flex-direction: column; */
-      
-    }
-    .tutorial ul li:hover ul li {
-      display: block;
-      background-color: whitesmoke;
-      font-size: 10px;
-      color:black;
-      border-radius: 5px;
-      opacity: 1px;
-      margin: 1px 0px 0px 0px;
-      font-family: Georgia, 'Times New Roman', Times, serif;
-      
-    }
-    .tutorial ul li:hover ul li span {
-      float: right;
-      color:blue;
-      background-color: #F03861;
-      padding: 1px 3px;
-      text-align: center;
-      font-size: 12px;
-      border-radius: 2px;
-    }
-    .tutorial ul li:hover ul li:hover {
-      background-color: #e0e0e0;
-    
-    }
-    .tutorial ul li:hover ul li:hover span {
-      background-color: #ee204e;
-      }
-  
-} 
-
-@media only screen and (min-width: 768px)  {
-    .NavMenuSmall{
+  .NavMenu {
     display: none;
-    }
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+  }
+
+  .tutorial {
+    width: 100%;
+    margin: 0;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* background-color: #090b13;  */
+    background-color: #090b13;
+    max-width: 250px;
+    height: 40px;
+  }
+
+  .tutorial ul {
+    padding-top: 0px;
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 4px;
+    width: 167px;
+    padding-left: 1px;
+    align-items: center;
+  }
+
+  .tutorial ul img {
+    padding: 0;
+    width: 15px;
+    /* display: block; */
+  }
+
+  .tutorial .img1 {
+    font-size: 50px;
+    height: 10px;
+    display: inline;
+  }
+
+  .tutorial ul li {
+    font-size: 14px;
+    color: white;
+    display: inline-block;
+    padding: 2px;
+    position: relative;
+    margin-right: 4px;
+    /* background-color: black; */
+    background-color: #090b13;
+    height: 38px;
+    padding-top: 10px;
+    box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
+    border-radius: 4px;
+    border: 1px solid rgba(151, 151, 151, 0.34);
+    /* border: 1px solid silver; */
+    text-transform: uppercase;
+    /* font-family: 'Times New Roman', Times, serif; */
+  }
+
+  .tutorial ul li ul {
+    display: none;
+  }
+  /* .tutorial ul li ul.dropdown.closed { display: none; } */
+
+  .tutorial ul li:hover {
+    cursor: pointer;
+    background-color: rgb(226, 6, 6);
+    border-radius: 3px;
+    transition-duration: 0.1s;
+    transform: scale(1.08);
+  }
+  .tutorial ul li:hover ul {
+    display: block;
+    margin-top: 3px;
+    width: 71px;
+    padding-left: 0;
+    position: absolute;
+    letter-spacing: 1px;
+    /* display: flex;
+      flex-direction: column; */
+  }
+  .tutorial ul li:hover ul li {
+    display: block;
+    background-color: whitesmoke;
+    font-size: 10px;
+    color: black;
+    border-radius: 5px;
+    opacity: 1px;
+    margin: 1px 0px 0px 0px;
+    font-family: Georgia, "Times New Roman", Times, serif;
+  }
+  .tutorial ul li:hover ul li span {
+    float: right;
+    color: blue;
+    background-color: #f03861;
+    padding: 1px 3px;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 2px;
+  }
+  .tutorial ul li:hover ul li:hover {
+    background-color: #e0e0e0;
+  }
+  .tutorial ul li:hover ul li:hover span {
+    background-color: #ee204e;
+  }
 }
 
-.NavMenu .diva{
+@media only screen and (min-width: 768px) {
+  .NavMenuSmall {
+    display: none;
+  }
+}
+
+.NavMenu .diva {
   display: flex;
   align-items: center;
   padding: 0 12px;
 }
 
-
-.NavMenu .diva img{
+.NavMenu .diva img {
   height: 20px;
- 
 }
 
-.NavMenu .diva span{
+.NavMenu .diva span {
   color: rgb(249, 249, 249);
   font-size: 15px;
-  letter-spacing: 1.30px;
+  letter-spacing: 1.3px;
   line-height: 1px;
   padding: 2px 0px;
   white-space: nowrap;
   position: relative;
   cursor: pointer;
   letter-spacing: 2px;
-
 }
-.NavMenu .diva  span:hover:before{
+.NavMenu .diva span:hover::before {
   transform: scaleX(1);
   visibility: visible;
   opacity: 1 !important;
- 
 }
-.NavMenu .diva span::before{
-  background-color: rgb(249, 249, 249);
+.NavMenu .diva span::before {
+  /* background: rgba(255, 0, 0, 0.897); */
+  background: #fb2c2c;
   border-radius: 0px 0px 4px 4px;
   bottom: -6px;
   bottom: -6px;
@@ -226,20 +208,17 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   width: auto;
 }
 
-.LoginSignup{
+.LoginSignup {
   /* position: relative; */
   top: 2px;
   height: 48px;
-  width:initial;
+  width: initial;
   display: flex;
   cursor: pointer;
   /* overflow: hidden; */
-  
 }
 
- 
-.LoginSignup p{
-  
+.LoginSignup p {
   border: 1px solid rgba(151, 151, 151, 0.34);
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
@@ -253,63 +232,47 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-top: 5px;
 }
 
-.LoginSignup p:hover{
+.LoginSignup p:hover {
   color: black;
   font-weight: bold;
   background-color: white;
   transition-duration: 0.7s;
-} 
-
+}
 
 @media only screen and (max-width: 768px) {
-      
-      .LoginSignup{
-        position: relative;
-        top: 2px;
-        height: 48px;
-        width:initial;
-        display: flex;
-        cursor: pointer;
-        overflow: hidden;
-        text-transform: capitalize;
-        
-        
-      }
+  .LoginSignup {
+    position: relative;
+    top: 2px;
+    height: 48px;
+    width: initial;
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    text-transform: capitalize;
+  }
 
-      .LoginSignup p{
-        
-        border: 1px solid rgba(151, 151, 151, 0.34);
-        border-radius: 4px;
-        box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
-        font-size: 13px;
-        letter-spacing: 1px;
-        text-align: center;
-        text-justify: center;
-        color: whitesmoke;
-        
-            /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+  .LoginSignup p {
+    border: 1px solid rgba(151, 151, 151, 0.34);
+    border-radius: 4px;
+    box-shadow: rgb(0 0 0 / 50%) 0px 0px 18px 0px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-align: center;
+    text-justify: center;
+    color: whitesmoke;
 
-       
-       
-        
-      }
+    /* font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; */
+  }
 
-      .LoginSignup p:hover{
-        color: black;
-        font-weight: bold;
-        background-color: white;
-        transition-duration: 0.7s;
-      }
+  .LoginSignup p:hover {
+    color: black;
+    font-weight: bold;
+    background-color: white;
+    transition-duration: 0.7s;
+  }
+}
 
-
-} 
-
-
-
-
-
-
-.Bigmenu{
+.Bigmenu {
   margin-left: 50px;
   outline: none;
   border: none;
@@ -318,22 +281,19 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   -webkit-tap-highlight-color: transparent;
 }
 
-.menu{
+.menu {
   text-align: right;
   position: fixed;
   width: 100%;
-  margin-left:-75px !important;
+  margin-left: -75px !important;
   z-index: 200;
- 
 }
 /* I hide the checkbox because I only need the label */
-#check{
+#check {
   display: none;
 }
 
-
-.buttona{
-
+.buttona {
   width: 48px;
   height: 40px;
   background: black;
@@ -354,43 +314,39 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   margin-right: 7px;
 }
 @media only screen and (max-width: 768px) {
-  .buttona{
+  .buttona {
     padding-top: 5px;
-
   }
 }
-.buttona:hover{
-
+.buttona:hover {
   background: red;
 }
-.buttona span{
+.buttona span {
   height: 3px;
   width: 100%;
   background: white;
   display: inline-block;
-  transition: all 0.5s cubic-bezier(.62,.43,.35,1.47);
+  transition: all 0.5s cubic-bezier(0.62, 0.43, 0.35, 1.47);
 }
 
-
 /* toggle icon animation */
-#check:checked ~ .buttona span:nth-child(1){
+#check:checked ~ .buttona span:nth-child(1) {
   width: 100%;
   transform: rotate(45deg) translateY(6px) translateX(6px);
 }
-#check:checked ~ .buttona span:nth-child(2){
+#check:checked ~ .buttona span:nth-child(2) {
   width: 0;
 }
 
-#check:checked ~ .buttona span:nth-child(3){
+#check:checked ~ .buttona span:nth-child(3) {
   width: 100%;
   transform: rotate(-45deg) translateY(-7px) translateX(7px);
 }
 
-
 /* the nav height is set to 0 when the navbar is closed */
 
-.nava{
-  margin-top:39px;
+.nava {
+  margin-top: 39px;
 
   text-align: left;
   overflow: hidden;
@@ -401,15 +357,13 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   /* width: 100%; */
   background: #ffffff;
   height: 0;
-  
-
 }
-.nava a{
+.nava a {
   text-decoration: none;
   color: #0c1019;
   display: block;
   font-size: 18px;
-  transition: all 0.4s cubic-bezier(.22,.43,.35,1.5);
+  transition: all 0.4s cubic-bezier(0.22, 0.43, 0.35, 1.5);
   opacity: 0;
   transform: scale(0);
   transform-origin: top;
@@ -420,16 +374,16 @@ font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   background: white;
 }
 
-.nava a:hover{
+.nava a:hover {
   background: #ffdd7f;
 }
 
 /* the nav height will be set to the height in pixels that would have for default, using height:auto won't work but you can put that value in pixels creating the slide*/
-#check:checked ~ .nava{
+#check:checked ~ .nava {
   height: 144px;
 }
 
-#check:checked ~ .nava a{
+#check:checked ~ .nava a {
   padding: 10px;
   opacity: 1;
   transform: scale(1);

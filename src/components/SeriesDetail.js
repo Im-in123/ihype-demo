@@ -98,7 +98,7 @@ useEffect(() => {
             // console.log("Got the first episode::::", yo1[v].episode_num)
             const yo2= yo1[v]
             // console.log("Got final episode:::",yo2)
-            dispatch({type:currentSeriesVideoAction,payload:{"video":yo2.video,"cover":yo2.cover, "title":yo2.title, "season_num":yo2.season_num, "subtitle_file":yo2.subtitle_file}});
+            dispatch({type:currentSeriesVideoAction,payload:{"video":LOCAL_CHECK ? yo2.video:yo2.video_url,"cover":yo2.cover, "title":yo2.title, "season_num":yo2.season_num, "subtitle_file":yo2.subtitle_file}});
             console.log("starter episode:::::", currentVideo)
 
           }
@@ -113,12 +113,9 @@ useEffect(() => {
    
  
   resize();
-  
-
 
  }
  
-
 
 const handleToggleButtonClick = (e) => {  
   // if (isShown) return
@@ -309,7 +306,7 @@ if (fetching){
                 {detailData.subtitle}
           </div>
           <div className="DetailDescription">
-         {detailData.description} 
+         {detailData.description} <br/> {detailData.other_info}
           </div>
           <div id="detailseason" className="DetailSeason">
             <Season data={detailData.season}/>
@@ -327,7 +324,7 @@ if (fetching){
         <button onClick={handleCloseButtonClick}>
         X Close trailer
         </button> 
-    <video src={detailData.trailer} autoPlay={true} controls="controls" poster={LOCAL_CHECK ? detailData.cover : detailData.cover_url} />
+    <video src={LOCAL_CHECK ? detailData.trailer: detailData.trailer_url} autoPlay={true} controls="controls" poster={LOCAL_CHECK ? detailData.cover : detailData.cover_url} />
    </> ):(<>
       <button onClick={handleCloseButtonClick}>
       X Close 
@@ -340,12 +337,18 @@ if (fetching){
    <button onClick={handleCloseButtonClick}>
 X Close Video 
 </button> 
-        <video crossorigin="anonymous" autoPlay={true} controls="controls" poster={detailData.cover && currentVideo.cover}>
+        <video crossorigin="anonymous" autoPlay={true} controls="controls" 
+        poster={LOCAL_CHECK ?
+              detailData.cover && currentVideo.cover
+                :
+               detailData.cover_url && currentVideo.cover_url
+            }
+        >
         <track src={currentVideo.subtitle_file} label="English" srcLang="en-us" kind="subtitles"  default />
-          <source src={currentVideo.video} type="video/mkv"/>
-          <source src={currentVideo.video} type="video/webm"/>
-          <source src={currentVideo.video} type="video/ogg"/>
-          <source src={currentVideo.video}  type="video/mp4"/>
+          <source src={LOCAL_CHECK ? currentVideo.video: currentVideo.video_url} type="video/mkv"/>
+          <source src={LOCAL_CHECK ? currentVideo.video: currentVideo.video_url}  type="video/webm"/>
+          <source src={LOCAL_CHECK ? currentVideo.video: currentVideo.video_url} type="video/ogg"/>
+          <source src={LOCAL_CHECK ? currentVideo.video: currentVideo.video_url}  type="video/mp4"/>
 
         </video>
        </> ):(<>
@@ -388,7 +391,9 @@ const Season =(props)=>{
     console.log("scrolli::::", scrolli)
     scrolli.scrollIntoView({behavior:'smooth'})
     // scrolli.scrollIntoView()({behavior:'smooth', block:'end'})
-    scrolli.style= "color:red"
+    scrolli.style= "color: red"; 
+
+    // scrolli.style= "color: #fb2c2c"; 
       
     } catch (error) {
       console.log("scrolli error", error)
@@ -417,12 +422,12 @@ const Season =(props)=>{
       <div>
       {props.data.map((item,key)=>
         <div className key={key}>
-       <p style={{textAlign:"left"}}>{item.title}</p>
+       <p style={{textAlign:"left", color:"red", fontSize:'21px'}}>{item.title}</p>
        {item.episodes.map((ep,ekey)=>
         <div  id="getit" key={ekey}>
-          <button id={ep.title} className="episode" onClick={()=> Changeit(ep.video,ep.cover, ep.title, ep.season_num, ep.subtitle_file)} > {ep.title}</button>
+          <button id={ep.title} className="episode" onClick={()=> Changeit(LOCAL_CHECK ? ep.video:ep.video_url ,ep.cover, ep.title, ep.season_num, ep.subtitle_file)} > {ep.title}</button>
          </div>
-     )}  <hr></hr>
+     )}  <hr style={{color:'grey'}}></hr>
         </div>
         
      )} 

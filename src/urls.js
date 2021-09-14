@@ -24,3 +24,4 @@ export const FORGOT_PASSWORD_URL = BASE_URL + "user/request-reset-password";
 export const CHANGE_PASSWORD_URL = BASE_URL + "user/change-password";
 
 export const LOCAL_CHECK = false;
+// export const LOCAL_CHECK = true;
