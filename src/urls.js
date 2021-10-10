@@ -1,6 +1,6 @@
-// const BASE_URL ="http://192.168.43.77:8000/"; 
-const BASE_URL = "http://127.0.0.1:8000/";
-// const BASE_URL ="https://ihype.herokuapp.com/"; 
+// const BASE_URL ="http://192.168.43.77:8000/";
+// const BASE_URL = "http://127.0.0.1:8000/";
+const BASE_URL = "https://ihype.herokuapp.com/";
 
 export const LOGIN_URL = BASE_URL + "user/login";
 export const SIGNUP_URL = BASE_URL + "user/signup";
@@ -17,7 +17,8 @@ export const WATCHLIST_URL = BASE_URL + "watchlist/";
 export const ADD_TO_LIST_URL = BASE_URL + "update-watchlist";
 export const CHECK_WATCHLIST_URL = BASE_URL + "check-watchlist";
 
-export const SECONDARY_EMAIL_VERIFICATION = BASE_URL + "user/secondary-email-verification";
+export const SECONDARY_EMAIL_VERIFICATION =
+  BASE_URL + "user/secondary-email-verification";
 
 export const FORGOT_PASSWORD_URL = BASE_URL + "user/request-reset-password";
 
