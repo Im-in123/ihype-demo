@@ -6,10 +6,9 @@ import {
   CHECK_WATCHLIST_URL,
   LOCAL_CHECK,
 } from "../urls";
-import { ReactVideo } from "reactjs-media";
-import ReactPlayer from "react-player";
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
+import MovieComp from "./VideoComps/MovieComp";
 let debouncer;
 
 const MovieDetail = (props) => {
@@ -41,7 +40,6 @@ const MovieDetail = (props) => {
   }, []);
 
   useEffect(() => {
-    // prompt("Please use UC browser if you encounter videoplack errors. Thank you.")
     console.log(props);
     getMovieDetail(props);
     resize();
@@ -78,6 +76,13 @@ const MovieDetail = (props) => {
 
   const handleCloseButtonClick = (e) => {
     setIsShown(false);
+    try {
+      const eli = document.getElementById("eli");
+
+      setTimeout(() => {
+        eli.classList.remove("DetailBackground1");
+      }, 2000);
+    } catch (error) {}
     console.log("Set to false::::");
   };
   const handleTrailer = (e) => {
@@ -89,24 +94,6 @@ const MovieDetail = (props) => {
     setTrailer(false);
     handleToggleButtonClick();
     console.log("Set video to true::::");
-
-    // clearTimeout(debouncer);
-    // debouncer= setTimeout(() =>{
-    //   try {
-    //     console.log("debouncer started")
-    //     let vv= document.getElementById('vivi')
-    //     console.log(vv)
-    //     vv.onended = function () {
-    //       this.load();
-    //       this.play();
-    //       this.currentTime = 17;
-    //     };
-    //     console.log("debouncer ended")
-
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }, 3700)
   };
   const resize = (e) => {
     let currentHideNav = window.innerWidth <= 760;
@@ -201,7 +188,6 @@ const MovieDetail = (props) => {
       <div className="DetailContainer">
         {small ? (
           <div className="DetailBackground" id="eli">
-            {/* <img alt={detailData.title} src={detailData.background_small_screen} /> */}
             <img
               alt={detailData.title}
               src={
@@ -213,7 +199,6 @@ const MovieDetail = (props) => {
           </div>
         ) : (
           <div className="DetailBackground" id="eli">
-            {/* <img alt={detailData.title} src={detailData.background_big_screen} /> */}
             <img
               alt={detailData.title}
               src={
@@ -225,145 +210,18 @@ const MovieDetail = (props) => {
           </div>
         )}
 
-        {!isShown ? (
-          <>
-            <div className="DetailImageTitle">
-              {/* <img alt={detailData.title} src="./images/play-icon-black.png" /> */}
-              <p>{detailData.title}</p>
-            </div>
-            <div className="DetailContentMeta">
-              <div className="DetailControls">
-                <button className="DetailPlayer" onClick={handleVideo}>
-                  <img src="/images/play-icon-black.png" alt="" />
-                  <span>Play</span>
-                </button>
-                <button className="DetailTrailer" onClick={handleTrailer}>
-                  <img src="/images/play-icon-white.png" alt="" />
-                  <span>Trailer</span>
-                </button>
-                <button
-                  className="DetailAddList"
-                  onClick={() => {
-                    handleAddtoList();
-                  }}
-                >
-                  {watchfetch ? (
-                    <p>...</p>
-                  ) : (
-                    <>
-                      {finalwatch ? (
-                        <img src="/images/done_white.svg" alt="finalwatch" />
-                      ) : (
-                        <>
-                          <span></span>
-                          <span></span>
-                        </>
-                      )}
-                    </>
-                  )}{" "}
-                </button>
-                {/* <div className="DetailGroupWatch">
-                    <div>
-                        <img src="/images/group-icon.png" alt="" />
-                    </div>
-               </div> */}
-              </div>
-              <div className="DetailSubtitle">{detailData.subtitle}</div>
-              <div className="DetailDescription">
-                {detailData.description} <br /> {detailData.other_info}
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="DetailVideo">
-              {trailer ? (
-                <>
-                  <p>
-                    {detailData.title} - {detailData.subtitle}
-                  </p>
-
-                  {detailData.trailer ? (
-                    <>
-                      <button onClick={handleCloseButtonClick}>
-                        X Close trailer
-                      </button>
-                      {/* <video src={detailData.trailer} autoPlay={true} controls="controls" poster={detailData.cover} /> */}
-                      <video
-                        src={
-                          LOCAL_CHECK
-                            ? detailData.trailer
-                            : detailData.trailer_url
-                        }
-                        autoPlay={true}
-                        controls="controls"
-                        poster={
-                          LOCAL_CHECK ? detailData.cover : detailData.cover_url
-                        }
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <button onClick={handleCloseButtonClick}>X Close</button>
-                      <p>Trailer Not available</p>
-                    </>
-                  )}
-                </>
-              ) : (
-                <>
-                  {detailData.video_url ? (
-                    <>
-                      <p>
-                        {detailData.title} - {detailData.subtitle}
-                      </p>
-                      <button onClick={handleCloseButtonClick}>
-                        X Close Video
-                      </button>
-                      {/* <video id="vivi" playbackrate="1" src={detailData.video} autoPlay={true} controls="controls" poster={detailData.cover} crossorigin="anonymous"> */}
-                      <video
-                        id="vivi"
-                        playbackrate="1"
-                        src={
-                          LOCAL_CHECK ? detailData.video : detailData.video_url
-                        }
-                        autoPlay={true}
-                        controls="controls"
-                        poster={detailData.cover_url}
-                        crossorigin="anonymous"
-                      >
-                        <track
-                          src={detailData.subtitle_file}
-                          label="English"
-                          srcLang="en-us"
-                          kind="subtitles"
-                          default
-                        />
-                        {/* <track src="/French_captions_file.vtt" label="French" kind="subtitles" srclang="fr" /> */}
-                      </video>
-                    </>
-                  ) : (
-                    <>
-                      <p>
-                        {detailData.title} - {detailData.subtitle}
-                      </p>
-                      <button onClick={handleCloseButtonClick}>X Close</button>
-                      <p>Movie Not available</p>
-                    </>
-                  )}
-                </>
-              )}
-            </div>
-
-            {/* <div>
-            <p>reactjs-media Package</p>
-         <ReactVideo
-                src={detailData.video} 
-                poster={detailData.cover}
-                className="rjs"
-            /> 
-          </div> */}
-          </>
-        )}
+        <MovieComp
+          isShown={isShown}
+          detailData={detailData}
+          handleAddtoList={handleAddtoList}
+          handleCloseButtonClick={handleCloseButtonClick}
+          handleTrailer={handleTrailer}
+          trailer={trailer}
+          handleVideo={handleVideo}
+          finalwatch={finalwatch}
+          watchfetch={watchfetch}
+          watcherror={watcherror}
+        />
       </div>
     </>
   );

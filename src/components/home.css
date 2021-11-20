@@ -7,9 +7,10 @@
   height: 300px;
 }
 
+/* commented out because of videoplayer
 input {
   display: none;
-}
+} */
 
 .inner {
   width: 500%;

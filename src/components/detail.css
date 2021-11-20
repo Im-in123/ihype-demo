@@ -345,6 +345,7 @@
   border: none;
   border-radius: 3px;
   letter-spacing: 0.3px;
+  text-align: start;
 }
 
 .DetailSeason .episode:hover {
@@ -355,8 +356,8 @@
 }
 
 .DetailVideo video {
-  width: 100% !important;
-  height: 65vh !important;
+  /* width: 100% !important; */
+  /* height: 65vh !important; */
 }
 .DetailVideo button {
   margin-bottom: 20px;
@@ -377,7 +378,7 @@
   }
 
   .DetailVideo {
-    margin-left: -14px !important;
+    /* margin-left: -14px !important; */
     /* padding-left: -10px !important; */
   }
 
@@ -400,11 +401,11 @@
   .DetailVideo video {
     /* width: 90vw   !important;
         height: 40vh  !important; */
-    width: 98vw !important;
-    height: 40vh !important;
+    /* width: 98vw !important; */
+    /* height: 40vh !important; */
 
     /* background-color:rgba(22, 20, 20, 0.5); */
-    border-radius: 7px;
+    /* border-radius: 7px; */
   }
 }
 
