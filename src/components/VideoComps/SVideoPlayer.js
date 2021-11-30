@@ -42,7 +42,7 @@ const SVideoPlayer = (props) => {
     season_item,
     season_btn,
     episode_svg;
-
+  let replay_btn;
   console.log("videoName::", props.video);
   useEffect(() => {
     videoContainer = document.querySelector(".video-container");
@@ -96,6 +96,7 @@ const SVideoPlayer = (props) => {
 
     prev_btn = document.querySelector(".previous");
     next_btn = document.querySelector(".next");
+    replay_btn = document.querySelector(".replay");
 
     // seasonbuttons
     if (!props.isTrailer) {
@@ -200,7 +201,9 @@ const SVideoPlayer = (props) => {
     volumeButton.onmouseleave = () => {
       volumeSetBar.style.display = "none";
     };
-
+    replay_btn.onclick = () => {
+      video.currentTime = 0;
+    };
     if (!props.isTrailer) {
       episode_btn.onclick = () => {
         menu_wrapper.classList.toggle("show");
@@ -545,7 +548,7 @@ const SVideoPlayer = (props) => {
             <span className="episode">{props.episode}</span>
           </p>
 
-          <button className="prev">
+          <button className="replay">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               enableBackground="new 0 0 24 24"
@@ -739,7 +742,18 @@ const SeasonObj = (props) => {
       <>
         <ul className="season-drop">
           <li className="arrow back-season-btn">
-            <span className="fas fa-arrow-left"></span>Seasons
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="white"
+              style={{ position: "relative", top: "2px" }}
+            >
+              <path d="M0 0h24v24H0V0z" fill="none" opacity=".87" />
+              <path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z" />
+            </svg>
+            Seasons
           </li>
           {props.data.map((item, key) => (
             <li
@@ -766,7 +780,7 @@ const SeasonObj = (props) => {
 }
 
 const EpisodeObj = (props) => {
-  // console.log("episodeObj props::", props);
+  console.log("episodeObj props::", props);
   let menu_bar, s_drop;
   const onclick = () => {
     s_drop = document.querySelector(".s-drop");
@@ -780,8 +794,18 @@ const EpisodeObj = (props) => {
       <>
         <ul className="s-drop">
           <li className="arrow back-s-btn" onClick={() => onclick()}>
-            <span className="fas fa-arrow-left"></span>
-            {props.data.title}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="white"
+              style={{ position: "relative", top: "2px" }}
+            >
+              <path d="M0 0h24v24H0V0z" fill="none" opacity=".87" />
+              <path d="M17.51 3.87L15.73 2.1 5.84 12l9.9 9.9 1.77-1.77L9.38 12l8.13-8.13z" />
+            </svg>
+            Episodes
           </li>
           {props.data.map((item, key) => (
             <EpisodeSingle data={item.episodes} key={key} />
@@ -839,8 +863,7 @@ const EpisodeSingle = (props) => {
       {props.data.map((item, key) => (
         <li key={key}>
           {/* {currentVideo.video === item.video ? ( */}
-             {currentVideo.video === item.video_url ?(
-
+          {currentVideo.video === item.video_url ? (
             <a
               href="#"
               onClick={(e) =>

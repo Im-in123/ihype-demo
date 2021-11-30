@@ -7,7 +7,7 @@
   background: black;
   font-family: sans-serif;
 } */
-@import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
+
 .video-container {
   margin-top: 3vw;
   width: 100%;
@@ -458,7 +458,8 @@ ul li a .titl {
 @media only screen and (max-width: 768px) {
   .wrapper-t ul {
     padding: 0px;
-    /* margin-left: 35%; */
+    margin-left: 35%;
+
     margin-right: 5%;
   }
   .wrapper-t ul li {

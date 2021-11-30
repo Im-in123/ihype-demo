@@ -28,6 +28,7 @@ const MVideoPlayer = (props) => {
   let popup1Cont;
   let popPlayBtn;
   let spin;
+  let replay;
   console.log("videoName::", props.video);
   useEffect(() => {
     videoContainer = document.querySelector(".video-container");
@@ -74,7 +75,7 @@ const MVideoPlayer = (props) => {
     );
     slider = document.querySelector("#slider");
     number = document.querySelector("#number");
-
+    replay = document.querySelector(".replay");
     popup1Cont = document.querySelector("#popup1");
     popPlayBtn = document.querySelector(".pop-play");
     spin = document.querySelector(".spin");
@@ -158,7 +159,9 @@ const MVideoPlayer = (props) => {
     volumeButton.onmouseleave = () => {
       volumeSetBar.style.display = "none";
     };
-
+    replay.onclick = () => {
+      video.currentTime = 0;
+    };
     document.addEventListener("mousemove", (event) => {
       displayControls();
     });
@@ -192,6 +195,30 @@ const MVideoPlayer = (props) => {
     };
     fastForwardButton.onclick = () => {
       video.currentTime += 10;
+    };
+    let tmp = document.getElementById("tmp");
+
+    video.onprogress = () => {
+      let duration = video.duration;
+      if (duration > 0) {
+        for (var i = 0; i < video.buffered.length; i++) {
+          if (
+            video.buffered.start(video.buffered.length - 1 - i) <
+            video.currentTime
+          ) {
+            tmp.style.width =
+              (video.buffered.end(video.buffered.length - 1 - i) / duration) *
+                100 +
+              "%";
+            console.log(
+              (video.buffered.end(video.buffered.length - 1 - i) / duration) *
+                100 +
+                "%"
+            );
+            break;
+          }
+        }
+      }
     };
     // volumeButton.addEventListener("click", toggleMute);
 
@@ -335,6 +362,7 @@ const MVideoPlayer = (props) => {
         poster={props.poster}
         autoPlay={true}
         crossOrigin="anonymous"
+        preload="meta-data"
       >
         <track
           src={props.subtitle_file && props.subtitle_file}
@@ -349,6 +377,15 @@ const MVideoPlayer = (props) => {
           <div className="progress-bar">
             <div className="watched-bar"></div>
             <div className="playhead"></div>
+            <div
+              id="tmp"
+              style={{
+                backgroundColor: "#f42929",
+                position: "absolute",
+                height: "0.9vmin",
+                zIndex: -1,
+              }}
+            ></div>
           </div>
           <div className="time-remaining">00:00</div>
         </div>
